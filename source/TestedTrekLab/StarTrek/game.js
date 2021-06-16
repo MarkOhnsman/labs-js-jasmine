@@ -121,10 +121,32 @@ class Game {
 
   processCommand(ui) {
     var enemy = ui.variable("target");
+    // var weapon;
     if (ui.parameter("command") === "phaser") {
+      // weapon = new Phaser()
       this.firePhasers(ui, enemy);
     } else if (ui.parameter("command") === "photon") {
+      // weapon = new Torpedo()
       this.firePhotonTorpedos(ui, enemy);
+    }
+
+    // fireWeapon(ui, enemy, weapon)
+  }
+
+  // NOTE abstraction of above method
+  processCommandWithExcraction(ui) {
+    var weapon = this.readyWeapon(ui.parameter("command"));
+    weapon.fire(ui);
+    weapon.coolStartCooldown();
+  }
+  readyWeapon(type) {
+    switch (type) {
+      case "phaser":
+        return new Phaser();
+      case "photon":
+        return new Photon();
+      default:
+        throw new Error("We don't have that weapons system");
     }
   }
 }
