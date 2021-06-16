@@ -1,3 +1,26 @@
+class Weapon {
+  fire(game, ui) {
+    if (_hasAmmo(game, ui)) {
+      //TODO Pick-Up Here
+    }
+  }
+  _hasAmmo(game, ui) {
+    throw new Error("You must specify the derived method");
+  }
+}
+
+class Photon extends Weapon {
+  _hasAmmo(game, _unusedUI) {
+    return game.torpedos > 0;
+  }
+}
+
+class Phaser extends Weapon {
+  _hasAmmo(game, ui) {
+    return game.power >= parseInt(ui.parameter("amount"), 10);
+  }
+}
+
 class Game {
   power = 10000;
   torpedos = 8;
